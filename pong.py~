@@ -1,12 +1,12 @@
 import pygame, sys
 
-try:
-	sound_name = "grenade.wav"
-	sound = pygame.mixer.Sound(sound_name)
-except pygame.error, message:
-	print "Cannot load sound: " + sound_name
-	raise SystemExit, message
-	sound  = None
+#try:
+	#sound_name = "grenade.wav"
+	#sound = pygame.mixer.Sound(sound_name)
+#except pygame.error, message:
+	#print "Cannot load sound: " + sound_name
+	#raise SystemExit, message
+	#sound  = None
 
 # Constants
 SCREEN_WIDTH = 800
