@@ -41,8 +41,31 @@ score2 = 0
 # Load the font for displaying the score
 font = pygame.font.Font(None, 30)
 
+running = True
+rematch = False
+winner = "anyone"
+r_for_rematch = "Press 'R' for a rematch!"
+
 # Game loop
-while True:
+while running == True:
+
+	while rematch == True:
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+				sys.exit(0)
+				pygame.quit()
+		if pygame.key.get_pressed()[pygame.K_r]:
+			score1 = 0
+			score2 = 0
+			rematch = False
+		winning_text = font.render(str(winner), True, (255, 0, 0))
+		rematch_text = font.render(str(r_for_rematch), True, (255, 0, 0))
+		screen.blit(winning_text, (340, 200))
+		screen.blit(rematch_text, (340, 230))
+		pygame.display.flip()
+		pygame.time.delay(20)
+
+
 	# Event handler
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
@@ -77,9 +100,9 @@ while True:
 	# Ball collision with rails
 	if ball_rect.top <= 0 or ball_rect.bottom >= SCREEN_HEIGHT:
 		ball_speed[1] = -ball_speed[1]
-	if ball_rect.right >= SCREEN_WIDTH or ball_rect.left <= 0:
+	#if ball_rect.right >= SCREEN_WIDTH or ball_rect.left <= 0:
 		#ball_speed[0] = -ball_speed[0]
-		ball_rect = pygame.Rect((SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), (BALL_WIDTH_HEIGHT, BALL_WIDTH_HEIGHT))
+		#ball_rect = pygame.Rect((SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), (BALL_WIDTH_HEIGHT, BALL_WIDTH_HEIGHT))
 		
 	# Test if the ball is hit by the paddle; if yes reverse speed and add a point
 	if paddle1_rect.colliderect(ball_rect):
@@ -91,8 +114,12 @@ while True:
 
 	if ball_rect.right >= SCREEN_WIDTH:
 		score1 += 1
+		ball_rect = pygame.Rect((SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), (BALL_WIDTH_HEIGHT, BALL_WIDTH_HEIGHT))
+
 	if ball_rect.left <= 0:
 		score2 += 1
+		ball_rect = pygame.Rect((SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), (BALL_WIDTH_HEIGHT, BALL_WIDTH_HEIGHT))
+
 
 
 
@@ -108,6 +135,14 @@ while True:
 	screen.blit(score_text_1, (((SCREEN_WIDTH / 2) - 10) - font.size(str(score1))[0] / 2, 5))
 	screen.blit(score_text_2, (((SCREEN_WIDTH / 2) + 10) - font.size(str(score2))[0] / 2, 5))
 	pygame.draw.line(screen, (0, 0, 255), (400, 0), (400, 800))
+
+	if score1 == 11:
+		winner = "Player 1 wins!"
+		rematch = True
+		#print "rematch"
+	if score2 == 11:
+		winner = "Player 2 wins!"
+		rematch = True
 
 	# Update screen and wait 20 milliseconds
 	pygame.display.flip()
