@@ -57,11 +57,15 @@ while True:
 			elif paddle1_rect.bottom >= SCREEN_HEIGHT:
 				paddle1_rect.bottom = SCREEN_HEIGHT
 
-	# This test if up or down keys are pressed; if yes, move the paddle
-	if pygame.key.get_pressed()[pygame.K_UP] and paddle1_rect.top > 0:
+	# This test if w/up or s/down keys are pressed; if yes, move the paddle
+	if pygame.key.get_pressed()[pygame.K_w] and paddle1_rect.top > 0:
 		paddle1_rect.top -= BALL_SPEED
-	elif pygame.key.get_pressed()[pygame.K_DOWN] and paddle1_rect.bottom < SCREEN_HEIGHT:
+	elif pygame.key.get_pressed()[pygame.K_s] and paddle1_rect.bottom < SCREEN_HEIGHT:
 		paddle1_rect.top += BALL_SPEED
+	elif pygame.key.get_pressed()[pygame.K_UP] and paddle2_rect.top > 0:
+		paddle2_rect.top -= BALL_SPEED
+	elif pygame.key.get_pressed()[pygame.K_DOWN] and paddle2_rect.bottom < SCREEN_HEIGHT:
+		paddle2_rect.bottom += BALL_SPEED
 	elif pygame.key.get_pressed()[pygame.K_ESCAPE]:
 		sys.exit(0)
 		pygame.quit()
