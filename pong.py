@@ -78,7 +78,8 @@ while True:
 	if ball_rect.top <= 0 or ball_rect.bottom >= SCREEN_HEIGHT:
 		ball_speed[1] = -ball_speed[1]
 	if ball_rect.right >= SCREEN_WIDTH or ball_rect.left <= 0:
-		ball_speed[0] = -ball_speed[0]
+		#ball_speed[0] = -ball_speed[0]
+		ball_rect = pygame.Rect((SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), (BALL_WIDTH_HEIGHT, BALL_WIDTH_HEIGHT))
 		
 	# Test if the ball is hit by the paddle; if yes reverse speed and add a point
 	if paddle1_rect.colliderect(ball_rect):
