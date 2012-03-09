@@ -1,12 +1,18 @@
-import pygame, sys
+import pygame, sys, os
 
-#try:
-	#sound_name = "grenade.wav"
-	#sound = pygame.mixer.Sound(sound_name)
-#except pygame.error, message:
-	#print "Cannot load sound: " + sound_name
-	#raise SystemExit, message
-	#sound  = None
+
+def load_sound(name):
+	class NoneSound:
+		def play(self): pass
+	if not pygame.mixer:
+		return NoneSound()
+	fullname = os.path.join('grenade.wav', name)
+	try:
+		sound = pygame.mixer.Sound(fullname)
+	except pygame.error, message:
+		print "Cannot load sound: ", wav
+		raise SystemExit, message
+	return sound
 
 # Constants
 SCREEN_WIDTH = 800
@@ -45,6 +51,8 @@ running = True
 rematch = False
 winner = "anyone"
 r_for_rematch = "Press 'R' for a rematch!"
+
+paddle_sound = load_sound("grenade.wav")
 
 # Game loop
 while running == True:
@@ -107,9 +115,11 @@ while running == True:
 	# Test if the ball is hit by the paddle; if yes reverse speed and add a point
 	if paddle1_rect.colliderect(ball_rect):
 		ball_speed[0] = -ball_speed[0]
+		paddle_sound.play()
 		#score1 += 1
 	if paddle2_rect.colliderect(ball_rect):
 		ball_speed[0] = -ball_speed[0]
+		paddle_sound.play()
 
 
 	if ball_rect.right >= SCREEN_WIDTH:
